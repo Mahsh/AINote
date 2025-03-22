@@ -1,0 +1,9 @@
+        CREATE TABLE  todos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            content TEXT NOT NULL,
+            created_time TEXT NOT NULL,
+            completed_time TEXT,
+            status INTEGER DEFAULT 0,
+            reminder_time TEXT,
+            suggestion TEXT
+        )

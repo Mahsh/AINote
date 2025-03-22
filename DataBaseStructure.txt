@@ -1,0 +1,6 @@
+CREATE TABLE `test_table` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `theme` varchar(128) DEFAULT NULL COMMENT '主题',
+  `language` varchar(11) DEFAULT NULL COMMENT '语言',
+  PRIMARY KEY (`user_id`)
+)
