@@ -1,0 +1,68 @@
+# this is the test SQL for Dify Tools
+
+select * from todos
+
+INSERT INTO todos (content, created_at, reminder, suggestion, status) VALUES ('参加团队会议', '2023-10-27 11:00:00', '2023-10-27 10:30:00', '准备会议材料', 0);
+INSERT INTO todos (content, created_at, completed_at, status) VALUES ('发送电子邮件', '2023-10-27 12:00:00', '2023-10-27 12:30:00', 1);
+INSERT INTO todos (content, created_at, suggestion, status) VALUES (
+    '撰写详细的项目总结报告',
+    '2023-10-27 15:30:00',
+    '为了确保项目总结报告能够全面反映项目的进展和成果，建议在撰写时详细记录以下内容：1.  项目目标与实际成果的对比分析，包括成功之处和未达预期部分的原因分析。2.  项目实施过程中遇到的主要挑战及解决方案，重点突出团队的协作和创新能力。3.  详细的成本控制分析，包括预算执行情况、资源分配效率以及潜在的成本节约方案。4.  项目进度管理分析，包括时间节点达成情况、项目里程碑完成情况以及项目延期的原因分析。5.  团队成员的绩效评估，包括个人贡献、团队协作以及技能提升情况。6.  客户或利益相关者的反馈汇总，包括满意度调查结果、意见建议以及潜在的改进方向。7.  项目经验总结与教训，为未来类似项目提供参考。8.  项目文档的归档和管理，确保所有相关资料的完整性和可追溯性。9.  项目后期维护和支持计划，包括技术支持、培训以及问题解决流程。10. 项目的创新点和亮点，突出项目的独特价值和竞争优势。',
+    0
+);
+
+测试用例
+有效的 SELECT 查询：
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT * FROM todos"}' http://8.138.178.146:5001/sql
+
+有效的 INSERT 操作：
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "INSERT INTO todos (content, created_at) VALUES (\'Test todo\', \'2023-10-27 10:00:00\') "}' http://8.138.178.146:5001/sql
+
+有效的 UPDATE 操作：
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "UPDATE todos SET content = \'updated content\' WHERE id = 1"}' http://8.138.178.146:5001/sql
+
+有效的 DELETE 操作：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "DELETE FROM todos WHERE id = 1"}' http://8.138.178.146:5001/sql
+无效的 SQL 语句（不允许的关键字）：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "CREATE TABLE test (id INTEGER)"}' http://8.138.178.146:5001/sql
+无效的 SQL 语句（语法错误）：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT FROM todos"}' http://8.138.178.146:5001/sql
+缺少 SQL 语句：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{}' http://8.138.178.146:5001/sql
+空的 SQL 语句：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": ""}' http://8.138.178.146:5001/sql
+使用 SQL 注入的尝试：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT * FROM todos; DROP TABLE todos;"}' http://8.138.178.146:5001/sql
+查询不存在的表：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT * FROM non_existent_table"}' http://8.138.178.146:5001/sql
+查询数据表中的特定字段
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT content, created_at FROM todos"}' http://8.138.178.146:5001/sql
+使用where条件语句进行查询
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT * FROM todos WHERE id = 1"}' http://8.138.178.146:5001/sql

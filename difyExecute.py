@@ -7,9 +7,10 @@ def main(sql: str) -> dict:
     # 用户输入（假设用户输入是要执行的 SQL 语句）
     user_input = "INSERT INTO todos (content, created_at, status, reminder, suggestion) VALUES ('学习 Dify', '2023-10-15 14:00:00', 0, '2023-10-16 22:00:00', '无')"
     '''
-    API_URL = "https://5a9d-221-176-33-114.ngrok-free.app/sql"
+    API_URL = "http://8.138.178.146:5001/sql"
     user_input = sql
-    user_input = "INSERT INTO todos (content, created_at, status, reminder, suggestion) VALUES ('学习 Dify', '2023-10-15 14:00:00', 0, '2023-10-16 22:00:00', '无')"
+    user_input = "INSERT INTO todos (content, created_time, completed_time, status, reminder_time, suggestion) VALUES ('查看代码', NOW(), NULL, 0, '', '明日任务')"
+    # user_input = "select * from todos"
 
     # 调用 Flask API
     try:
