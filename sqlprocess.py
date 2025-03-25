@@ -99,3 +99,62 @@ def init_db():
 if __name__ == '__main__':
     init_db()  # 初始化数据库（仅在第一次运行时执行）
     app.run(host='127.0.0.1', port=5001)
+
+'''
+测试用例
+有效的 SELECT 查询：
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT * FROM todos"}' http://8.138.178.146:5001/sql
+
+有效的 INSERT 操作：
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "INSERT INTO todos (content, created_at) VALUES (\'Test todo\', \'2023-10-27 10:00:00\') "}' http://8.138.178.146:5001/sql
+
+有效的 UPDATE 操作：
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "UPDATE todos SET content = \'updated content\' WHERE id = 1"}' http://8.138.178.146:5001/sql
+
+有效的 DELETE 操作：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "DELETE FROM todos WHERE id = 1"}' http://8.138.178.146:5001/sql
+无效的 SQL 语句（不允许的关键字）：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "CREATE TABLE test (id INTEGER)"}' http://8.138.178.146:5001/sql
+无效的 SQL 语句（语法错误）：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT FROM todos"}' http://8.138.178.146:5001/sql
+缺少 SQL 语句：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{}' http://8.138.178.146:5001/sql
+空的 SQL 语句：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": ""}' http://8.138.178.146:5001/sql
+使用 SQL 注入的尝试：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT * FROM todos; DROP TABLE todos;"}' http://8.138.178.146:5001/sql
+查询不存在的表：
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT * FROM non_existent_table"}' http://8.138.178.146:5001/sql
+查询数据表中的特定字段
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT content, created_at FROM todos"}' http://8.138.178.146:5001/sql
+使用where条件语句进行查询
+
+Bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"sql": "SELECT * FROM todos WHERE id = 1"}' http://8.138.178.146:5001/sql
+
+'''
